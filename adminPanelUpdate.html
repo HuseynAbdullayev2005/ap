@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panel</title>
+    <link rel="stylesheet" href="adminPanel.css">
+</head>
+
+<body>
+    <a href="index.html">esas seyfeye kecid</a>
+    <form>
+
+        <label for="name">name:</label>
+        <input type="text" class="inp_name">
+        <label for="prize">prize:</label>
+        <input type="text" class="inp_prize">
+
+
+
+        <label for="about">about:</label>
+        <textarea class="inp_about" placeholder="about"></textarea>
+        <button class="btn_submit">Submit</button>
+
+    </form>
+    <script>
+        const inp_name = document.querySelector(".inp_name");
+        const inp_prize = document.querySelector(".inp_prize");
+        const inp_about = document.querySelector(".inp_about");
+        const btn_submit = document.querySelector(".btn_submit");
+        const form = document.querySelector("form")
+        const id = window.location.hash.slice(1)
+
+
+        async function getById(id) {
+            const res = await fetch("https://6724aabbc39fedae05b2470a.mockapi.io/adminpanel/" + id);
+            const data = await res.json();
+            return data
+
+        }
+        async function fill(id) {
+            const data = await getById(id)
+            inp_name.value = data.name;
+            inp_prize.value = data.prize;
+            inp_about.value = data.about;
+
+        }
+        fill(id)
+
+
+        btn_submit.onclick = async () => {
+            await updateById(id, {
+                name: inp_name.value,
+                prize: inp_prize.value,
+                about: inp_about.value
+            })
+        }
+
+
+        async function create() {
+            try {
+                const res = await fetch("https://6724aabbc39fedae05b2470a.mockapi.io/adminpanel", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: inp_name.value,
+                        prize: inp_prize.value,
+                        about: inp_about.value,
+                    })
+                });
+
+                const data = await res.json();
+                console.log(data);
+
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        async function updateById(id, updatedData) {
+            try {
+                const res = await fetch("https://6724aabbc39fedae05b2470a.mockapi.io/adminpanel/" + id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedData)
+                });
+                const data = await res.json();
+                console.log("Updated data:", data);
+            } catch (error) {
+                console.error("Error updating data:", error);
+            }
+        }
+
+        btn_submit.addEventListener("click", create())
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+        });
+    </script>
+</body>
+
+</html>

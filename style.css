@@ -1,0 +1,48 @@
+body {
+    padding: 50px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    color: white;
+}
+
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+
+    background-color: #2e2d2d;
+}
+
+tr:nth-child(odd) {
+    background-color: #855151;
+}
+
+.delete_button {
+    background-color: red;
+
+    text-align: center;
+    cursor: pointer;
+}
+
+
+.update_button {
+    background-color: rgb(60, 255, 0);
+    cursor: pointer;
+    text-align: center;
+}
+
+.delete_head {
+    width: 7%;
+}
+
+.update_head {
+    width: 7%;
+}
